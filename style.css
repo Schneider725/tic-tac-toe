@@ -1,0 +1,242 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body, h1, h2, h3, h4, p,
+figure, blockquote, dl, dd {
+  margin-block-end: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  margin: 0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1, h2, h3, h4,
+button, input, label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1, h2,
+h3, h4 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input, button,
+textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+:root {
+    --cell-size: 100px;
+    --cell-color: black;
+    --mark-size: calc(var(--cell-size) * .9);
+}
+
+.board {
+    width: 100vw;
+    height: 70vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: black 2px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:last-child {
+    border-bottom : none;
+}
+
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+
+.cell:nth-child(3n + 3) {
+    border-right: none;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    content: '';
+    position: absolute;
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+    background-color: black;
+}
+.cell.x::before,
+.board.x .cell:hover::before {
+    transform: rotate(45deg);
+}
+.cell.x::after,
+.board.x .cell:hover::after{
+    transform: rotate(-45deg);
+}
+
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.circle):not(.x):hover::before,
+.board.circle .cell:not(.circle):not(.x):hover::after{
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before{
+    height: var(--mark-size);
+    width: var(--mark-size);
+    background-color: black;
+}
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+    height: calc(var(--mark-size) * .7);
+    width: calc(var(--mark-size) * .7);
+    background-color: white;
+}
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 5rem;
+    color: white;
+  }
+  
+  .winning-message button {
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+  }
+  
+  .winning-message button:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+  }
+  
+  
+  .winning-message.show {
+    display: flex;
+  } 
+
+  .header{
+    display: flex;
+    justify-content: center;
+    font-size: 60px;
+    text-shadow: red 1px 1px;
+  }
+
+  .players {
+    display: flex;
+    justify-content: space-around;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: x-large;
+  }
+
+  input#playerX {
+    border: 2px black solid;
+  }
+
+  input#playerCircle {
+    border: 2px red solid;
+  }
+
+  .startGame {
+    display: flex;
+    justify-content: center;
+  }
+  button {
+    padding: 5px;
+    font-size: large;
+  }
+  button:hover {
+    cursor: pointer;
+  }
+  
+  #playerTurn {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+    margin-top: 20px;
+  }
+
